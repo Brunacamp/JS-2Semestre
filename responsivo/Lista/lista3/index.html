@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /*1*/
+        img {
+            width: 150px;
+        }
+        /*4*/
+        #perfil{
+            border-radius: 360px;
+            border: 2px solid #333;
+        }
+        /*5*/
+        .galeria {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .galeria img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .galeria img.ativa {
+      width: 200px;
+      height: 200px;
+      border: 3px solid #ff6600;
+    }
+
+    /*6*/
+    .banner img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    /*7*/
+     #carrossel {
+      width: 300px;
+      height: 200px;
+      margin: 0 auto 20px;
+      border: 1px solid #333;
+    }
+
+    #carrossel img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 0 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    </style>
+</head>
+<body>
+    <!--1-->
+     <h1>O banner vai trocar</h1>
+     <img id="banner" src="gatinho1.jpg" alt="">
+
+    <!--2-->
+     <h1>Lampada</h1>
+     <button><img id="bntLampada" src="luzApagada.jpg" alt=""></button>
+
+    <!--3-->
+    <h1>Mostrar ou Esconder</h1>
+    <button id="mostrarEsconder">Mostrar ou Esconder</button>
+    <br>
+    <img id="imagem" src="imgME.jpg" alt="">
+
+    <!--4-->
+    <h1>Trocar foto de Perfil</h1>
+    <img id="perfil" src="perfil1.jpg" alt="">
+    <br>
+    <button id="bntTrocar">Trocar foto</button>
+
+    <!--5-->
+    <h1>Galeria com Clique</h1>
+      <div class="galeria">
+        <img src="img1.webp" alt="">
+        <img src="img2.jpg" alt="">
+        <img src="img3.webp" alt="">
+    </div>
+
+    <!--6-->
+    <h1>Banner 3 versões</h1>
+    <div class="banner">
+        <picture>
+            <source media="(min-width: 1025px)" srcset="banner1.png">
+            
+            <source media="(min-width: 600px)" srcset="banner2.png">
+
+            <img src="banner3.png" alt="Banner Responsivo">
+        </picture>
+    </div>
+
+    <!--7-->
+      <h1>Carrossel de Imagens</h1>
+
+        <div id="carrossel">
+            <img id="imagemC" src="" alt="Imagem do Carrossel">
+        </div>
+
+        <button onclick="anterior()">Anterior</button>
+        <button onclick="proxima()">Próxima</button>
+
+    <script>
+        // 1
+        const banner = document.getElementById("banner")
+        
+        function trocaImg(){
+           if(window.innerWidth < 600){
+            banner.src = "gatinho2.jpg"
+           } else {
+            banner.src = "gatinho1.jpg"
+           }
+        }
+        trocaImg()
+        window.addEventListener("resize", trocaImg)
+
+        //2
+
+            const lampada = document.getElementById("bntLampada");
+            let acesa = false;
+
+            lampada.addEventListener("click", () => {
+                if (acesa) {
+                    lampada.src = "luzApagada.jpg";
+                } else {
+                    lampada.src = "luzAcesa.jpg";
+                }
+                acesa = !acesa;
+            })
+
+        //3
+         const mostrarEsconder = document.getElementById("mostrarEsconder")
+        const imagem = document.getElementById("imagem")
+
+        mostrarEsconder.addEventListener("click", () => {
+            if (imagem.style.display === "none") {
+        imagem.style.display = "block";
+        } else {
+            imagem.style.display = "none";
+        }
+            })
+
+        //4
+        const bntTrocar = document.getElementById("bntTrocar")
+        const perfil = document.getElementById("perfil")
+        
+
+        let trocar = true;
+
+        bntTrocar.addEventListener("click", () => {
+            if (trocar) {
+                perfil.src = "perfil2.jpg";
+            } else {
+                perfil.src = "perfil1.jpg";
+            }
+            trocar = !trocar;
+        })
+
+        //5
+        const imagens = document.querySelectorAll(".galeria img");
+
+        imagens.forEach(img => {
+            img.addEventListener("click", () => {
+            imagens.forEach(i => i.classList.remove("ativa"));
+                img.classList.add("ativa");
+            });
+        });
+
+        //7
+        const imagensC = ["carrossel1.jpg", "carrossel2.webp", "carrossel3.jpg"];
+
+        let indiceAtual = 0;
+
+        function mostrarImagem() {
+            const img = document.getElementById("imagemC");
+            img.src = imagensC[indiceAtual];
+        }
+        mostrarImagem();
+
+        function proxima() {
+            indiceAtual++;
+            if (indiceAtual >= imagensC.length) {
+                indiceAtual = 0;
+            }
+                mostrarImagem();
+        }
+
+    
+        function anterior() {
+            indiceAtual--;
+            if (indiceAtual < 0) {
+                indiceAtual = imagensC.length - 1;
+            }
+                mostrarImagem();
+        }
+
+
+    </script>
+
+</body>
+</html>
